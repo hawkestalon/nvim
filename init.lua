@@ -133,10 +133,15 @@ require('lazy').setup({
 
   {
     -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    'rebelot/kanagawa.nvim',
     priority = 1000,
+    opts = {
+      background = {
+        dark = "dragon"
+      }
+    },
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'kanagawa'
     end,
   },
 
@@ -509,10 +514,7 @@ mason_lspconfig.setup_handlers {
   end
 }
 
-require('onedark').setup {
-  transparent = true,
-}
-require('onedark').load()
+require('kanagawa').load()
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
