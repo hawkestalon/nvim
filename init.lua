@@ -205,7 +205,7 @@ require('lazy').setup({
         logging = false,
         filetype = {
           typescript = {
-            require("formatter.filetypes.typescript").prettier,
+            require("formatter.filetypes.typescript").prettierd,
           },
         },
       })
@@ -235,6 +235,7 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
+  { 'wakatime/vim-wakatime', lazy=false},
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
