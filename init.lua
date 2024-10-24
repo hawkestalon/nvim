@@ -159,7 +159,7 @@ require('lazy').setup({
       },
     },
   },
-
+  {'akinsho/toggleterm.nvim', version = "*", config = true},
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
