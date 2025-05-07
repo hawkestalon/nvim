@@ -92,7 +92,24 @@ require('lazy').setup({
       'folke/neodev.nvim',
     },
   },
-
+  {
+    'supermaven-inc/supermaven-nvim',
+    config = function()
+      require("supermaven-nvim").setup({
+        keymaps = {
+          accept_suggestion = "<C-u>",
+          clear_suggestion = "<C-]>",
+          accept_word = "<C-j>",
+        },
+        color = {
+          suggestion_color = "#a3a2a0",
+          cterm = 244,
+        },
+        log_level = "info", -- set to "off" to disable logging completely
+        disable_inline_completion = false, -- disables inline completion for use with cmp
+      })
+    end,
+  },
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -130,7 +147,6 @@ require('lazy').setup({
       end,
     },
   },
-
   {
     -- Theme inspired by Atom
     'rebelot/kanagawa.nvim',
@@ -145,7 +161,6 @@ require('lazy').setup({
       vim.cmd.colorscheme 'kanagawa'
     end,
   },
-
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -165,10 +180,10 @@ require('lazy').setup({
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
-    opts = {
+    main= 'ibl';
+    indent = {
       char = '┊',
-      show_trailing_blankline_indent = false,
-    },
+    }
   },
 
   -- "gc" to comment visual regions/lines
@@ -518,7 +533,7 @@ mason_lspconfig.setup_handlers {
   end
 }
 
-require('kanagawa').load()
+ require('kanagawa').load()
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
@@ -565,6 +580,7 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'supermaven' },
   },
 }
 
