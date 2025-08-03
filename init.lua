@@ -148,17 +148,17 @@ require('lazy').setup({
     },
   },
   {
-    -- Theme inspired by Atom
-    'rebelot/kanagawa.nvim',
+    'folke/tokyonight.nvim',
     priority = 1000,
     opts = {
       transparent = true,
-      background = {
-        dark = "dragon"
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent",
       }
     },
     config = function()
-      vim.cmd.colorscheme 'kanagawa'
+      vim.cmd.colorscheme 'tokyonight-night'
     end,
   },
   {
@@ -210,22 +210,25 @@ require('lazy').setup({
   },
   { 'MunifTanjim/prettier.nvim', opts = {}},
   {
-    "mhartington/formatter.nvim",
-    cmd = "Format",
+    'stevearc/conform.nvim',
     keys = {
-      { "<leader>F", "<cmd>Format<CR>", desc = "Formatter" },
-      -- Or whatever bind
+      {
+        '<leader>F',
+        function()
+          require('conform').format { async = true, lsp_format = 'fallback' }
+        end,
+        mode = '',
+        desc = '[F]ormat buffer',
+      },
     },
-    config = function()
-      require("formatter").setup({
-        logging = false,
-        filetype = {
-          typescript = {
-            require("formatter.filetypes.typescript").prettierd,
-          },
-        },
-      })
-    end,
+    opts = {
+      formatters_by_ft = {
+        lua = { 'stylua' },
+        -- You can use 'stop_after_first' to run the first available formatter from the list
+        javascript = { "prettierd", "prettier", stop_after_first = true },
+        typescript = { "prettierd", "prettier", stop_after_first = true },
+      },
+    }
   },
   {
     "mfussenegger/nvim-lint",
@@ -496,7 +499,7 @@ local servers = {
    gopls = {},
   -- pyright = {},
   rust_analyzer = {},
-  tsserver = {},
+  ts_ls = {},
   sqlls = { },
   html = { filetypes = { 'html', 'twig', 'hbs'} },
   lua_ls = {
@@ -522,7 +525,7 @@ mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
 
-mason_lspconfig.setup_handlers {
+mason_lspconfig.setup {
   function(server_name)
     require('lspconfig')[server_name].setup {
       capabilities = capabilities,
@@ -532,8 +535,6 @@ mason_lspconfig.setup_handlers {
     }
   end
 }
-
- require('kanagawa').load()
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
