@@ -132,20 +132,11 @@ require('lazy').setup({
   },
 
   {
-    -- Theme inspired by Atom
-    'rebelot/kanagawa.nvim',
+    "folke/tokyonight.nvim",
+    lazy = false,
     priority = 1000,
-    opts = {
-      transparent = true,
-      background = {
-        dark = "dragon"
-      }
-    },
-    config = function()
-      vim.cmd.colorscheme 'kanagawa'
-    end,
+    opts = {},
   },
-
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -165,10 +156,8 @@ require('lazy').setup({
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
+    main = 'ibl',
+    opts = {}
   },
 
   -- "gc" to comment visual regions/lines
@@ -266,6 +255,8 @@ vim.wo.number = true
 -- Enable mouse mode
 vim.o.mouse = ''
 
+
+vim.cmd[[colorscheme tokyonight]]
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
@@ -480,7 +471,7 @@ local servers = {
    gopls = {},
   -- pyright = {},
   rust_analyzer = {},
-  tsserver = {},
+  ts_ls = {},
   sqlls = { },
   html = { filetypes = { 'html', 'twig', 'hbs'} },
   lua_ls = {
@@ -504,20 +495,17 @@ local mason_lspconfig = require 'mason-lspconfig'
 
 mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
+  handlers = {
+    function(server_name)
+      require('lspconfig')[server_name].setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = servers[server_name],
+        filetypes = (servers[server_name] or {}).filetypes,
+      }
+    end
+  }
 }
-
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-      filetypes = (servers[server_name] or {}).filetypes,
-    }
-  end
-}
-
-require('kanagawa').load()
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
