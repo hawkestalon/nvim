@@ -131,12 +131,13 @@ require('lazy').setup({
     },
   },
 
-  {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {},
-  },
+  -- {
+  --   "folke/tokyonight.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {},
+  -- },
+  {'HectorBjernersjo/Neovim-theme-switcher'},
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -225,7 +226,6 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
-  { 'wakatime/vim-wakatime', lazy=false},
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
@@ -256,7 +256,7 @@ vim.wo.number = true
 vim.o.mouse = ''
 
 
-vim.cmd[[colorscheme tokyonight]]
+-- vim.cmd[[colorscheme tokyonight]]
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
@@ -346,7 +346,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'julia' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'julia', 'html' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = true,
@@ -469,7 +469,7 @@ end
 local servers = {
   -- clangd = {},
    gopls = {},
-  -- pyright = {},
+  pyright = {},
   rust_analyzer = {},
   ts_ls = {},
   sqlls = { },
